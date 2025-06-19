@@ -1,7 +1,9 @@
-# MANUAL GUIDE + HACK +INSTALL NDK IN ANDROIDIDE FOR armeabi-v7a(32 bit) Android 10+
+# Manual install Ndk  for armeabi-v7a(32 bit) Android 10+
 
 NOTES:
+
 *DWYR
+
 *BACKUP FIRST!!
 
 EXAMPLE:
@@ -23,14 +25,10 @@ download my script and put ndk29-patch-final.sh scripts in the dd folder
 
 download ndk for armeabi-v7a from the link below and rename it to ndk29.tar.xz and put it in the dd folder
 
-link ndk:
-
-```
 [Ndk armeabi-v7a](https://github.com/HomuHomu833/android-ndk-custom/releases/download/r29-beta2/android-ndk-r29-beta2-arm-linux-musleabihf.tar.xz)
-```
-
 
 Open terminal in androidide (if you open project close it before)
+
 typing:
 
 comand:
@@ -51,9 +49,6 @@ nano .bashrc
 ```
 
 copy this code:
-
-# start code
-
 ```
 export ANDROID_HOME="/data/user/0/com.itsaky.androidide/files/home/android-sdk"
 export ANDROID_NDK_HOME="/data/user/0/com.itsaky.androidide/files/home/android-sdk/ndk/29.0.13599879"
@@ -70,9 +65,14 @@ export PATH="$PATH:$ANDROID_NDK_HOME/toolchains/llvm/prebuilt/linux-x86_64/bin"
 export PATH="$PATH:$ANDROID_NDK_HOME/prebuilt/linux-arm/bin"
 
 ```
-# end code
 
-ctrl x ,y ,enter to save
+ctrl x 
+
+y
+
+enter
+
+to saving
 
 
 exit
