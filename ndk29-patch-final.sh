@@ -16,7 +16,7 @@ is_pkg_installed() {
 }
 
 
-PACKAGES=("cmake" "ninja" "make")
+PACKAGES=("cmake" "ninja")
 for pkg in "${PACKAGES[@]}"; do
     if is_pkg_installed "$pkg"; then
         echo "Package '$pkg' is already installed. Skipping."
@@ -78,7 +78,7 @@ echo "Extracting NDK from $NDK_TAR_XZ_PATH directly to $ndk_dir..."
 echo "waiting..."
 
 
-tar -xJf "$NDK_TAR_XZ_PATH" -C "$ndk_dir" --strip-components=1
+tar -vxJf "$NDK_TAR_XZ_PATH" -C "$ndk_dir" --strip-components=1
 if [ "$?" -ne 0 ]; then
    echo "ERROR: Failed to extract NDK files. Check file integrity or storage space."
    rm -rf "$ndk_dir"
@@ -110,7 +110,7 @@ echo ""
 
 
 ANDROID_SDK_HOME="/data/user/0/com.itsaky.androidide/files/home/android-sdk"
-CUSTOM_MAKE_PATH="/data/data/com.itsaky.androidide/files/usr/bin/make"
+CUSTOM_MAKE_PATH="/data/user/0/com.itsaky.androidide/files/home/android-sdk/ndk/29.0.13599879/prebuilt/linux-arm/bin/make"
 
 # --- Don't Change the Code Below ---
 
@@ -225,16 +225,16 @@ log "HOST_TAG=\$HOST_TAG"
 
 
 
-#hack make coz make from ndk not working
+
 GNUMAKE="$CUSTOM_MAKE_PATH"
 
 case \$(uname -s) in
    Linux)
      case \$(uname -m) in
-       armv8*) HOST_TAG="linux-arm" ;;
-       armv7*) HOST_TAG="linux-arm" ;;
-       arm) HOST_TAG="linux-arm" ;;
-       *) echo "ERROR: Unsupported host architecture, Lol this for arm only!! your host is: \$(uname -m)";  exit 1 ;;
+       armv8l) HOST_TAG="linux-arm" ;;
+       armv7l) HOST_TAG="linux-arm" ;;
+       armv7) HOST_TAG="linux-arm" ;;
+       *) echo "ERROR: Unsupported host architecture, Lol this for armv7 only!! your host is: \$(uname -m)";  exit 1 ;;
      esac
 ;;
 *) echo "ERROR: Host operating system not supported: \$(uname -s)"; exit 1 ;;
@@ -269,9 +269,19 @@ echo "The contents of ndk-build file were successfully updated."
 
 chmod +x "$NDK_BUILD_TARGET_PATH"
 if [ "$?" -ne 0 ]; then
-   echo "ERROR: Failed to grant execute permission to ndk-build."
+   echo "ERROR: Failed to grant execute permission to $NDK_BUILD_TARGET_PATH."
    exit 1
 fi
+
+echo "SUCSESS: Success to grant execute permission to $NDK_BUILD_TARGET_PATH."
+
+chmod +x "$CUSTOM_MAKE_PATH"
+if [ "$?" -ne 0 ]; then
+   echo "ERROR: Failed to grant execute permission to $CUSTOM_MAKE_PATH."
+   exit 1
+fi
+
+echo "SUCSESS: Success to grant execute permission to $CUSTOM_MAKE_PATH."
 
 echo "Execute permission granted."
 echo "The ndk-build script was successfully replaced. You can now try building your project."
